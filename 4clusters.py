@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/pypy
 
 
 class Vertex:
@@ -74,7 +74,7 @@ def Clusterize(K_num):
     print "Number of edges left", len(Edge.storage)
 
 def main():
-    f = open('clustering1.txt')
+    f = open('data/clustering1.txt')
     num_of_vertices = int(f.readline())
     for i in range(num_of_vertices):
         v = Vertex()
@@ -91,7 +91,11 @@ def main():
     print "Total number of edges:",len(Edge.storage)
 
     Clusterize(4)
-    print "Spacing:", Edge.storage.pop(0).cost
+    while(len(Edge.storage) > 0):
+        e = Edge.storage.pop(0)
+        if not e.inSingleCluster():
+            print "Spacing:", e.cost
+            break
 
 if __name__ == '__main__':
     main()
