@@ -2,19 +2,21 @@
 import numpypy as np
 
 def solveKnapsack(items,knapsack_size,number_of_items):
-    A = np.zeros((number_of_items+1,knapsack_size+1), dtype='int32')
+    A1 = np.zeros((knapsack_size+1), dtype='int32')
+    A2 = np.zeros((knapsack_size+1), dtype='int32')
     for i in range(1,number_of_items+1):
+        print i
         for j in range(knapsack_size+1):
-            v1=A[i-1][j]
+            v1=A1[j]
             v2=0
             if j-items[i-1][1] > 0:
-                v2 = A[i-1,j-items[i-1][1]]+items[i-1][0]
-            A[i][j] = max(v1,v2)
-
-    return A[number_of_items][knapsack_size]
+                v2 = A1[j-items[i-1][1]]+items[i-1][0]
+            A2[j] = max(v1,v2)
+    A1,A2 = A2,A1
+    return A1[knapsack_size]
 
 def main():
-    f = open('data/knapsack1.txt')
+    f = open('data/knapsack_big.txt')
     (knapsack_size, number_of_items) = [int(x) for x in f.readline().split()]
     print 'knapsack_size: ',knapsack_size
     print 'number_of_items: ',number_of_items
